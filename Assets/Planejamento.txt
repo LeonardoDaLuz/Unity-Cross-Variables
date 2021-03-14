@@ -1,0 +1,50 @@
+Features
+XBool
+XFloat
+XInt
+XBoolRequireds
+	XboolRequired[] Requireds
+		xIndex;
+		xBrain;
+		RequiredValue;
+		Event { ToMantain, ToStart, ToStop, Or, And }
+XFloatRequired
+XIntRequired
+RigidBodyDebuger
+	GetXboolsStatus
+	StackTraceFramePaths
+	OpenSpecifiedScripts
+AnimatorDebuger
+	GetXboolsStatus
+	StackTraceFramePaths
+	OpenSpecifiedScripts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------
+Realizei testes de desempenho no xbool, o que eu notei é que, se eu usar um get que obtem o valor
+através da array do xbrain eu consigo fazer isso 650mil vezes por frame. Mas se eu buildar para
+windows isto vai para 2800mil por frame. Um set de bool aninhada (sem o xbool, acesso direto à variável, o usual)
+pode ser feita 6500mil vezes por frame
+Tentei fazer um otimizador, verificando se a xbool ja estava otimizada, mas tive queda para 450mil no editor
+e para 1.7mi na build windows.
+
+Tentei otimizar dando o acesso direto ao xbooldata.value. No editor a velocidade foi para 4700mil acessos
+por frame no editor. Na build windows isto caiu para 1400mil. Precisarei testar estas otimizações nos mobiles
+mas... o get padrao do xbool.val se mostrou a melhor opção
+
+O xbool.set(true) com verificador de animator parameter rodou 450 mil vezes por frame no editor, e 
+1.8milhões de vezes na build windows.
